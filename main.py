@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from io import StringIO
 from matplotlib.font_manager import FontProperties # *日本語対応
+from yahooquery import Ticker
 
 # ここにCSVデータを入力します
 csv_data = """
@@ -68,5 +69,31 @@ std      = np.std(change_rates)
 print(f"平均: {mean}")
 print(f"分散: {variance}")
 print(f"標準偏差: {std}")
+
+#%%
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import math
+
+mean = 0.7353999999999999
+variance = 19.579587916923092
+
+sigma_squared = variance
+sigma = np.sqrt(sigma_squared)
+
+x = np.linspace(mean - 4 * sigma, mean + 4 * sigma, 1000)
+
+## pdf = (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - mu) / sigma)**2)
+pdf = stats.norm.pdf(x, mean, sigma)
+
+# グラフを描画
+plt.plot(x, pdf, label=f'Normal distribution\n$\mu={mean}$, $\sigma^2={sigma_squared}$')
+plt.xlabel('x')
+plt.ylabel('Probability density')
+plt.title('Normal Distribution')
+plt.legend()
+plt.grid(True)
+plt.show()
 
 #%%
